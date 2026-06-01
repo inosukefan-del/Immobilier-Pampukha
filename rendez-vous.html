@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prendre rendez-vous - Olena Pampukha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="dorsia-shared.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Navigation principale">
+      <a class="brand" href="index.html">
+        <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M6 16.5 16 8l10 8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 15.5V26h12V15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M14 26v-6h4v6" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+        Olena Pampukha
+      </a>
+      <ul class="nav-links">
+        <li><a href="biens-dorsia.html">Biens</a></li>
+        <li><a href="index.html#apropos">À propos</a></li>
+        <li><a href="blog-dorsia.html">Blog</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <a class="nav-contact" href="rendez-vous.html">Rendez-vous</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="appointment-page">
+      <div class="section-marker">
+        <span>
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M9 5v4M23 5v4M6 11h20M8 7h16a2 2 0 0 1 2 2v16H6V9a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11 16h4M11 21h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          Rendez-vous
+        </span>
+      </div>
+
+      <div class="appointment-layout">
+        <div class="appointment-copy">
+          <h1>Prendre rendez-vous</h1>
+          <p>Je vous réponds sous 24h les jours ouvrés.</p>
+          <p class="appointment-note">
+            Vous pouvez préciser votre projet, le bien qui vous intéresse ou le
+            créneau qui vous convient. Je reviendrai vers vous avec une réponse claire.
+          </p>
+        </div>
+
+        <form class="appointment-form" action="https://formspree.io/f/your-form-id" method="POST">
+          <div class="form-grid">
+            <label>
+              <span>Prénom</span>
+              <input type="text" name="prenom" autocomplete="given-name" required/>
+            </label>
+
+            <label>
+              <span>Nom</span>
+              <input type="text" name="nom" autocomplete="family-name" required/>
+            </label>
+          </div>
+
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" required/>
+          </label>
+
+          <label>
+            <span>Téléphone</span>
+            <input type="tel" name="telephone" autocomplete="tel" required/>
+          </label>
+
+          <label>
+            <span>Type de demande</span>
+            <select name="type_de_demande" required>
+              <option value="">Choisir</option>
+              <option value="achat">Achat</option>
+              <option value="vente">Vente</option>
+              <option value="location">Location</option>
+              <option value="autre">Autre</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Message</span>
+            <textarea name="message" rows="6" placeholder="Bonjour Olena, je souhaite prendre rendez-vous pour parler de mon projet immobilier."></textarea>
+          </label>
+
+          <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous"/>
+          <button class="button primary" type="submit">Envoyer</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Olena Pampukha · RE/MAX Accès Immobilier</span>
+      <span><a href="index.html">Accueil</a></span>
+    </div>
+  </footer>
+</body>
+</html>
