@@ -7,12 +7,359 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="dorsia-shared.css"/>
+  <style>
+    :root {
+      --paper: #F5F3EE;
+      --paper-2: #ECE8E1;
+      --graphite: #2F3A3C;
+      --sage: #6A7A6F;
+      --ink: #1A1A1A;
+      --muted: #6B6762;
+      --terracotta: #D27A55;
+      --line: rgba(26, 26, 26, .16);
+      --line-strong: rgba(47, 58, 60, .32);
+      --serif: "Libre Baskerville", Georgia, serif;
+      --sans: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.62;
+      text-rendering: optimizeLegibility;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    p, figure { margin: 0; }
+    h1, h2, h3 { margin: 0; color: var(--graphite); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(245, 243, 238, .94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 72px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--graphite);
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      color: var(--terracotta);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(18px, 3vw, 34px);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--graphite);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .nav-contact {
+      justify-self: end;
+      color: var(--graphite);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .page-hero,
+    .catalogue,
+    .contact-strip {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .page-hero {
+      padding: clamp(58px, 8vw, 110px) 0 clamp(38px, 6vw, 76px);
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(260px, .35fr);
+      gap: clamp(28px, 6vw, 86px);
+      align-items: end;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--sage);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .mini-icon {
+      width: 26px;
+      height: 26px;
+      color: var(--terracotta);
+      flex: 0 0 auto;
+    }
+
+    h1 {
+      max-width: 9ch;
+      margin-top: 18px;
+      font-family: var(--sans);
+      font-size: clamp(3.4rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: .92;
+      letter-spacing: -0.02em;
+    }
+
+    .page-hero p {
+      max-width: 39rem;
+      margin-top: 22px;
+      color: var(--muted);
+      font-family: var(--serif);
+      font-size: clamp(1rem, 1.4vw, 1.22rem);
+      line-height: 1.72;
+    }
+
+    .hero-count {
+      border-top: 1px solid var(--line-strong);
+      padding-top: 18px;
+      color: var(--graphite);
+    }
+
+    .hero-count strong {
+      display: block;
+      color: var(--terracotta);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: .92;
+    }
+
+    .back-link {
+      display: inline-flex;
+      margin-top: 26px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid currentColor;
+      color: var(--graphite);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .catalogue {
+      padding: 0 0 clamp(80px, 10vw, 132px);
+    }
+
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 34px);
+    }
+
+    .property-card {
+      border-top: 1px solid var(--line-strong);
+      padding-top: 18px;
+      min-width: 0;
+    }
+
+    .property-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(260px, .88fr);
+      gap: clamp(22px, 4vw, 42px);
+      align-items: end;
+    }
+
+    .property-card img {
+      width: 100%;
+      aspect-ratio: 16 / 11;
+      object-fit: cover;
+      margin-bottom: 18px;
+    }
+
+    .property-card.featured img {
+      aspect-ratio: 16 / 9;
+      margin-bottom: 0;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--terracotta);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .label::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .property-card h2 {
+      margin-top: 10px;
+      color: var(--ink);
+      font-size: clamp(1.22rem, 2vw, 1.72rem);
+      line-height: 1.14;
+      letter-spacing: -0.01em;
+    }
+
+    .property-card.featured h2 {
+      font-size: clamp(1.85rem, 3.5vw, 3.15rem);
+      line-height: 1.03;
+    }
+
+    .meta {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .96rem;
+      line-height: 1.58;
+    }
+
+    .details {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .details summary {
+      width: fit-content;
+      cursor: pointer;
+      color: var(--graphite);
+      font-size: .82rem;
+      font-weight: 800;
+      list-style: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    .details summary::-webkit-details-marker { display: none; }
+
+    .details p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .96rem;
+      line-height: 1.72;
+    }
+
+    .contact-strip {
+      border-top: 1px solid var(--line-strong);
+      padding: clamp(44px, 7vw, 82px) 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      color: var(--muted);
+    }
+
+    .contact-strip strong {
+      color: var(--graphite);
+      font-size: clamp(1.4rem, 2.4vw, 2.2rem);
+      line-height: 1.1;
+    }
+
+    .contact-strip a {
+      display: block;
+      color: var(--graphite);
+      font-weight: 800;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--paper-2);
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 78px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    @media (max-width: 920px) {
+      .nav {
+        grid-template-columns: 1fr auto;
+        min-height: auto;
+        padding: 16px 0;
+      }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        justify-content: space-between;
+        gap: 12px;
+        order: 3;
+        overflow-x: auto;
+        padding-top: 6px;
+      }
+
+      .page-hero,
+      .property-card.featured {
+        grid-template-columns: 1fr;
+      }
+
+      .property-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .property-card.featured {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 650px) {
+      body { font-size: 16px; }
+      .nav,
+      .page-hero,
+      .catalogue,
+      .contact-strip,
+      .footer-inner {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .nav-links { font-size: .78rem; }
+      h1 { font-size: clamp(3rem, 16vw, 4.6rem); }
+      .property-grid { grid-template-columns: 1fr; }
+      .property-card.featured { grid-column: auto; }
+      .property-card.featured img { margin-bottom: 18px; }
+      .contact-strip { display: grid; }
+    }
+  </style>
+  <link rel="stylesheet" href="editorial-luxury.css"/>
 </head>
 <body>
   <header class="site-header">
     <nav class="nav" aria-label="Navigation principale">
-      <a class="brand" href="index.html">
+      <a class="brand" href="olena-pampukha-dorsia.html">
         <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
           <path d="M6 16.5 16 8l10 8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M10 15.5V26h12V15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -22,10 +369,10 @@
       </a>
       <ul class="nav-links">
         <li><a href="biens-dorsia.html">Biens</a></li>
-        <li><a href="index.html#apropos">À propos</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="olena-pampukha-dorsia.html#apropos">À propos</a></li>
+        <li><a href="olena-pampukha-dorsia.html#contact">Contact</a></li>
       </ul>
-      <a class="nav-contact" href="rendez-vous.html">Rendez-vous</a>
+      <a class="nav-contact" href="olena-pampukha-dorsia.html#contact">Écrire</a>
     </nav>
   </header>
 
@@ -34,18 +381,18 @@
       <div>
         <div class="kicker">
           <svg class="mini-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M5 17 16 8l11 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M9 16v11h14V16" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M13 27v-7h6v7" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M5 17 16 8l11 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 16v11h14V16" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M13 27v-7h6v7" stroke="currentColor" stroke-width="1.8"/>
           </svg>
           Catalogue immobilier
         </div>
         <h1>Tous les biens.</h1>
         <p>
-          Les biens disponibles à l'achat ou à la location à Carcassonne et dans
-          l'Aude. Les informations essentielles sont visibles ici, sans détour.
+          Les biens disponibles à l'achat ou à la location dans l'Aude. Chaque
+          fiche se consulte directement ici, sans renvoi obligatoire vers une agence.
         </p>
-        <a class="back-link" href="index.html">Retour à l'accueil</a>
+        <a class="back-link" href="olena-pampukha-dorsia.html">Retour à l'accueil</a>
       </div>
       <div class="hero-count">
         <strong>10</strong>
@@ -54,15 +401,92 @@
     </section>
 
     <section class="catalogue">
-      <div class="section-marker">
-        <span>
-          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M8 24h16M10 24V11l6-4 6 4v13M13 24v-7h6v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Biens disponibles
-        </span>
+      <div class="property-grid">
+        <article class="property-card featured">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/5b1258de-818b-5525-b6fe-d42089db8176.jpg?v=20260421215035" alt="Villa avec jardin à Peyriac Minervois"/>
+          <div>
+            <div class="label">Peyriac Minervois · 313 000 €</div>
+            <h2>Villa 4 faces avec jardin</h2>
+            <p class="meta">178 m² · 6 pièces · 5 chambres · Réf. 1101526467</p>
+            <details class="details">
+              <summary>Voir le détail</summary>
+              <p>Villa de type 6 avec cinq chambres, cuisine aménagée, séjour avec cheminée, salle de bain, salle d'eau, deux greniers et hangar non attenant. La parcelle de presque 3000 m² est clôturée, arborée et piscinable.</p>
+            </details>
+          </div>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/d313b23e-560c-59fc-9ad5-f4f075077254.jpg?v=20250119054402" alt="Maison en pierre à Laure Minervois"/>
+          <div class="label">Laure Minervois · 59 000 €</div>
+          <h2>Maison en pierre à rénover</h2>
+          <p class="meta">83 m² · 4 pièces · 3 chambres · Réf. 1101523466</p>
+          <details class="details"><summary>Voir le détail</summary><p>Maison de village deux faces avec cuisine, trois chambres, salle d'eau, grenier aménageable et jardinet. Le bien est habitable en l'état, avec une modernisation à prévoir.</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/8fca2134-dbe4-534b-a701-b74cc8b28f89.jpg?v=20260130051340" alt="Maison de maître rénovée à Quillan"/>
+          <div class="label">Quillan · 498 000 €</div>
+          <h2>Maison de maître rénovée</h2>
+          <p class="meta">392 m² · 7 pièces · 6 chambres · Réf. 1101525324</p>
+          <details class="details"><summary>Voir le détail</summary><p>Maison de maître rénovée avec suites parentales, salons, cuisine équipée, bureau, cour intérieure, combles semi-aménagés et terrasse tropézienne avec vue sur les montagnes.</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/a6d7071c-da13-5e8a-ac69-0a0b9755e7ba.jpg?v=20260423041036" alt="Pavillon avec piscine à Trèbes"/>
+          <div class="label">Trèbes · 1 050 €</div>
+          <h2>Pavillon avec piscine</h2>
+          <p class="meta">Location · 4 pièces · 3 chambres · Réf. 1101526004</p>
+          <details class="details"><summary>Voir le détail</summary><p>Pavillon rénové avec séjour, cuisine équipée, salle de bains avec douche, dressing, menuiseries PVC double vitrage, volets roulants solaires et piscine avec plages en bois.</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/ae0c8ee9-cc24-5e43-867e-5f8848c37411.jpg?v=20260214050837" alt="Pavillon avec garage à Trèbes"/>
+          <div class="label">Trèbes · 139 500 €</div>
+          <h2>Pavillon avec garage</h2>
+          <p class="meta">85 m² · 4 pièces · 3 chambres · Réf. 1101526260</p>
+          <details class="details"><summary>Voir le détail</summary><p>Maison avec séjour cheminée, cuisine, salle d'eau, buanderie et garage. Parcelle de 360 m² clôturée, arborée et piscinable, proche des commodités.</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/1a1776d1-588d-5c83-bf3b-bf911a1a03a7.jpg?v=20260415214724" alt="Hangar avec logement à Puichéric"/>
+          <div class="label">Puichéric · 204 000 €</div>
+          <h2>Hangar avec logement</h2>
+          <p class="meta">104 m² · 4 pièces · 3 chambres · Réf. 1101526064</p>
+          <details class="details"><summary>Voir le détail</summary><p>Hangar lumineux de plus de 340 m² avec bureau, portails automatiques, fosse de vidange et pont élévateur. Logement de type 4 à l'étage avec véranda, terrasse et garage.</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/6f3e2039-f12d-57c2-bb0a-a03090186e75.jpg?v=20250802040002" alt="Pavillon rénové à Trèbes"/>
+          <div class="label">Trèbes · 179 000 €</div>
+          <h2>Pavillon rénové</h2>
+          <p class="meta">113 m² · 5 pièces · 4 chambres · Réf. 1101525568</p>
+          <details class="details"><summary>Voir le détail</summary><p>Maison rénovée avec cuisine ouverte, véranda, climatisation réversible, garage, cave, puits et parcelle clôturée, arborée et piscinable de 469 m².</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/cc5dc762-789f-5dfc-8083-3706a8532106.jpg?v=20260314051319" alt="Pavillon de plain-pied à Trèbes"/>
+          <div class="label">Trèbes · 179 500 €</div>
+          <h2>Pavillon de plain-pied</h2>
+          <p class="meta">111 m² · 5 pièces · 4 chambres · Réf. 1101516680</p>
+          <details class="details"><summary>Voir le détail</summary><p>Maison de plain-pied avec trois chambres en rez-de-chaussée, une chambre en mezzanine, garage et dépendances pouvant être converties en studio.</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/556d27de-6348-5499-8a40-39eacb72ff01.jpg?v=20251129051929" alt="Villa à rénover à Carcassonne"/>
+          <div class="label">Carcassonne · 149 000 €</div>
+          <h2>Villa à rénover</h2>
+          <p class="meta">245 m² · 7 pièces · 6 chambres · Réf. 1101525650</p>
+          <details class="details"><summary>Voir le détail</summary><p>Grande villa avec beaux volumes, pièces sous combles et travaux importants à prévoir. Terrain arboré et piscinable de 3479 m².</p></details>
+        </article>
+
+        <article class="property-card">
+          <img src="https://app.skysignage.com/cdn/content/adaptimmo/images/43d1ed7d-7abb-5cbe-8b30-2ad65fd37f64.jpg?v=20250911035850" alt="Bâtisse en pierre rénovée à Marseillette"/>
+          <div class="label">Marseillette · 260 000 €</div>
+          <h2>Bâtisse en pierre rénovée</h2>
+          <p class="meta">200 m² · 5 pièces · 4 chambres · Réf. 1101525661</p>
+          <details class="details"><summary>Voir le détail</summary><p>Bâtisse de caractère avec quatre chambres, grands séjours, cuisine ouverte, deux garages, piscine à l'étage, cuisine d'été et vue sur les vignes.</p></details>
+        </article>
       </div>
-      <div class="catalog-grid" id="catalogGrid"></div>
     </section>
 
     <section class="contact-strip">
@@ -76,190 +500,9 @@
 
   <footer>
     <div class="footer-inner">
-      <span>Olena Pampukha · RE/MAX Accès Immobilier</span>
-      <span><a href="index.html">Accueil</a></span>
+      <span>Olena Pampukha · Biens dans l'Aude</span>
+      <span><a href="olena-pampukha-dorsia.html">Accueil</a></span>
     </div>
   </footer>
-
-  <script>
-    const biens = [
-      {
-        ref: "1101526467",
-        title: "Villa 4 faces avec jardin",
-        city: "Peyriac Minervois",
-        price: "313 000 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/5b1258de-818b-5525-b6fe-d42089db8176.jpg?v=20260421215035",
-        surface: "178 m²",
-        pieces: "6 pièces",
-        bedrooms: "5 chambres",
-        lead: "Villa de type 6 avec jardin, hangar et logement indépendant à rénover. Une maison familiale lumineuse, proche des commodités.",
-        copy: [
-          "Villa 4 faces comprenant un hall d'entrée, 5 chambres dont 2 en rez-de-chaussée, une cuisine aménagée et équipée, un séjour avec cheminée, une salle de bain, une salle d'eau, 2 WC et 2 greniers en partie aménageables.",
-          "Le bien comprend aussi un hangar non attenant à usage de garage et un logement indépendant de type 2 à rénover. L'ensemble est construit sur une parcelle de presque 3000 m² clôturée, arborée et piscinable."
-        ]
-      },
-      {
-        ref: "1101523466",
-        title: "Maison en pierre à rénover",
-        city: "Laure Minervois",
-        price: "59 000 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/d313b23e-560c-59fc-9ad5-f4f075077254.jpg?v=20250119054402",
-        surface: "83 m²",
-        pieces: "4 pièces",
-        bedrooms: "3 chambres",
-        lead: "Maison de village deux faces avec jardinet et grenier aménageable. Le bien est habitable en l'état, avec une modernisation à prévoir.",
-        copy: [
-          "Maison de village deux faces en pierre comprenant une cuisine, 3 chambres, une salle d'eau et un grenier aménageable pouvant accueillir des chambres supplémentaires.",
-          "Le tout est complété par un jardinet. Une base intéressante pour un projet de résidence principale, secondaire ou investissement."
-        ]
-      },
-      {
-        ref: "1101525324",
-        title: "Maison de maître rénovée",
-        city: "Quillan",
-        price: "498 000 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/8fca2134-dbe4-534b-a701-b74cc8b28f89.jpg?v=20260130051340",
-        surface: "392 m²",
-        pieces: "7 pièces",
-        bedrooms: "6 chambres",
-        lead: "Maison de maître entièrement rénovée avec goût, cour intérieure, combles semi-aménagés et terrasse tropézienne.",
-        copy: [
-          "Le bien comprend des suites parentales, plusieurs salons, une cuisine équipée, un bureau, une chaufferie, une cour intérieure et des volumes généreux.",
-          "La terrasse tropézienne indépendante offre une vue sur les montagnes. Un bien rare, adapté à une grande famille, une maison d'hôtes ou une résidence secondaire de standing."
-        ]
-      },
-      {
-        ref: "1101526004",
-        title: "Pavillon avec piscine",
-        city: "Trèbes",
-        price: "1 050 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/a6d7071c-da13-5e8a-ac69-0a0b9755e7ba.jpg?v=20260423041036",
-        surface: "Location",
-        pieces: "4 pièces",
-        bedrooms: "3 chambres",
-        lead: "Pavillon totalement rénové avec séjour, cuisine équipée, dressing, double vitrage et piscine avec plages en bois.",
-        copy: [
-          "Le logement comprend un espace de vie ouvert, une salle de bains avec douche, 2 WC, des menuiseries PVC double vitrage et des volets roulants électriques solaires.",
-          "Piscine 4 m x 3 m avec plages en bois. Libre de suite, avec loyer de 1 050 €, charges de 20 € par mois et dépôt de garantie de 1 030 €."
-        ]
-      },
-      {
-        ref: "1101526260",
-        title: "Pavillon avec garage",
-        city: "Trèbes",
-        price: "139 500 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/ae0c8ee9-cc24-5e43-867e-5f8848c37411.jpg?v=20260214050837",
-        surface: "85 m²",
-        pieces: "4 pièces",
-        bedrooms: "3 chambres",
-        lead: "Maison avec séjour cheminée, cuisine, salle d'eau, buanderie et garage sur parcelle clôturée et arborée.",
-        copy: [
-          "Le pavillon propose une entrée, un séjour avec cheminée et insert, une cuisine, une salle d'eau, un WC séparé, une buanderie et un garage.",
-          "La parcelle de 360 m² est clôturée, arborée et piscinable, proche de toutes commodités. Idéal jeune couple ou investissement locatif."
-        ]
-      },
-      {
-        ref: "1101526064",
-        title: "Hangar avec logement",
-        city: "Puichéric",
-        price: "204 000 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/1a1776d1-588d-5c83-bf3b-bf911a1a03a7.jpg?v=20260415214724",
-        surface: "104 m²",
-        pieces: "4 pièces",
-        bedrooms: "3 chambres",
-        lead: "Ensemble immobilier avec grand hangar lumineux, logement de type 4 à l'étage, véranda, terrasse et garage.",
-        copy: [
-          "Le hangar de plus de 340 m² comprend hauteur sous plafond, fosse de vidange, pont élévateur, bureau et portails automatiques.",
-          "Le logement comprend 3 chambres, séjour, cuisine séparée, véranda, terrasse et garage. Une rénovation complète est à prévoir."
-        ]
-      },
-      {
-        ref: "1101525568",
-        title: "Pavillon rénové",
-        city: "Trèbes",
-        price: "179 000 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/6f3e2039-f12d-57c2-bb0a-a03090186e75.jpg?v=20250802040002",
-        surface: "113 m²",
-        pieces: "5 pièces",
-        bedrooms: "4 chambres",
-        lead: "Maison rénovée avec cuisine ouverte, véranda, climatisation réversible, garage, cave, puits et jardin.",
-        copy: [
-          "La maison a été rénovée en 2017 et comprend une cuisine équipée ouverte sur séjour, une véranda, 2 WC séparés, une salle d'eau et la climatisation réversible.",
-          "Le bien comprend aussi un garage, une cave et un puits, sur une parcelle de 469 m² clôturée, arborée et piscinable. Aucun travaux à prévoir."
-        ]
-      },
-      {
-        ref: "1101516680",
-        title: "Pavillon de plain-pied",
-        city: "Trèbes",
-        price: "179 500 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/cc5dc762-789f-5dfc-8083-3706a8532106.jpg?v=20260314051319",
-        surface: "111 m²",
-        pieces: "5 pièces",
-        bedrooms: "4 chambres",
-        lead: "Maison de plain-pied avec garage, dépendances et potentiel d'aménagement indépendant.",
-        copy: [
-          "La maison comprend 3 chambres en rez-de-chaussée, une chambre en mezzanine, une cuisine équipée, une salle d'eau, un garage et des dépendances.",
-          "Les dépendances peuvent être converties en studio. Parcelle de 549 m² clôturée, arborée et piscinable, proche de toutes commodités."
-        ]
-      },
-      {
-        ref: "1101525650",
-        title: "Villa à rénover",
-        city: "Carcassonne",
-        price: "149 000 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/556d27de-6348-5499-8a40-39eacb72ff01.jpg?v=20251129051929",
-        surface: "245 m²",
-        pieces: "7 pièces",
-        bedrooms: "6 chambres",
-        lead: "Grande villa avec beaux volumes, pièces sous combles, jardin arboré et fort potentiel après travaux.",
-        copy: [
-          "La villa comprend un hall d'entrée, une grande cuisine salle à manger, une arrière-cuisine, un séjour, des salles d'eau et plusieurs pièces sous combles.",
-          "Des travaux importants sont à prévoir pour obtenir une villa de plus de 220 m² habitables sur un terrain arboré et piscinable de 3479 m²."
-        ]
-      },
-      {
-        ref: "1101525661",
-        title: "Bâtisse en pierre rénovée",
-        city: "Marseillette",
-        price: "260 000 €",
-        image: "https://app.skysignage.com/cdn/content/adaptimmo/images/43d1ed7d-7abb-5cbe-8b30-2ad65fd37f64.jpg?v=20250911035850",
-        surface: "200 m²",
-        pieces: "5 pièces",
-        bedrooms: "4 chambres",
-        lead: "Bâtisse de caractère rénovée avec grands séjours, garages, piscine à l'étage, cuisine d'été et vues ouvertes.",
-        copy: [
-          "La bâtisse en pierre rénovée comprend 4 chambres, 3 salles d'eau, 4 WC, deux grands séjours, une cuisine ouverte équipée, une buanderie, une chaufferie et deux garages.",
-          "Piscine à l'étage, cuisine d'été, parcelle de 734 m² et vue sur les vignes, la Montagne Noire et les Corbières."
-        ]
-      }
-    ];
-
-    const grid = document.getElementById("catalogGrid");
-    grid.innerHTML = biens.map((bien) => `
-      <article class="catalog-card" id="ref-${bien.ref}">
-        <img src="${bien.image}" alt="${bien.title} à ${bien.city}"/>
-        <div class="label">${bien.city} · ${bien.price}</div>
-        <h2>${bien.title}</h2>
-        <p class="catalog-intro">${bien.lead}</p>
-        <div class="catalog-stats">
-          <span>${bien.surface}</span>
-          <span>${bien.pieces}</span>
-          <span>${bien.bedrooms}</span>
-          <span>Réf. ${bien.ref}</span>
-        </div>
-        <div class="catalog-detail-label">Voir le détail</div>
-        <div class="catalog-facts">
-          <span><small>Prix</small><strong>${bien.price}</strong></span>
-          <span><small>Surface</small><strong>${bien.surface}</strong></span>
-          <span><small>Pièces</small><strong>${bien.pieces}</strong></span>
-          <span><small>Chambres</small><strong>${bien.bedrooms}</strong></span>
-        </div>
-        <div class="catalog-copy">
-          ${bien.copy.map((paragraph) => `<p>${paragraph}</p>`).join("")}
-        </div>
-      </article>
-    `).join("");
-  </script>
 </body>
 </html>
